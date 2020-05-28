@@ -21,7 +21,7 @@
                     <fmt:message key="title.serverinfo.page" />
                 </h2>
             </td>
-            <td align="right"><fmt:message key="label.login.user.id" />: <%=session.getAttribute("userid")%> <br> <a
+            <td align="right"><fmt:message key="label.login.user.id" />: <%=(String)session.getAttribute("userid")%> <br> <a
                 href="${pageContext.request.contextPath}/logout"><fmt:message key="label.logout" /></a></td>
         </tr>
     </table>

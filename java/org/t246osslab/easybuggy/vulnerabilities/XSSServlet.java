@@ -1,6 +1,6 @@
 package org.t246osslab.easybuggy.vulnerabilities;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.util.Locale;
 
 import javax.servlet.ServletException;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
+import org.owasp.esapi.ESAPI;
 import org.t246osslab.easybuggy.core.servlets.AbstractServlet;
 
 @SuppressWarnings("serial")
@@ -36,8 +37,13 @@ public class XSSServlet extends AbstractServlet {
             if (!StringUtils.isBlank(string)) {
                 // Reverse the given string
                 String reversedName = StringUtils.reverse(string);
-                bodyHtml.append(getMsg("label.reversed.string", locale) + " : "
-                        + reversedName);
+                
+                /*vulnerable code*/
+                //bodyHtml.append(getMsg("label.reversed.string", locale) + " : " + reversedName);
+                
+                /*XSS remediation code here*/
+                bodyHtml.append(getMsg("label.reversed.string", locale) + " : " + ESAPI.encoder().encodeForHTML(reversedName));
+                
             } else {
                 bodyHtml.append(getMsg("msg.enter.string", locale));
             }
