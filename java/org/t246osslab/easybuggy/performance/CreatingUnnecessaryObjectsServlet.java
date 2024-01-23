@@ -18,14 +18,14 @@ public class CreatingUnnecessaryObjectsServlet extends AbstractServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         Locale locale = req.getLocale();
-        String strNumber = req.getParameter("number");
+        String strNumber = sanitizeInput(req.getParameter("number"));
         int number = NumberUtils.toInt(strNumber, -1);
         StringBuilder bodyHtml = new StringBuilder();
         bodyHtml.append("<form action=\"createobjects\" method=\"post\">");
         bodyHtml.append(getMsg("msg.calc.sym.natural.numbers", locale));
         bodyHtml.append("<br><br>n = ");
         if (number > 0) {
-            bodyHtml.append("<input type=\"text\" name=\"number\" size=\"9\" maxlength=\"9\" value=" + strNumber + ">");
+            bodyHtml.append("<input type=\"text\" name=\"number\" size=\"9\" maxlength=\"9\" value=\"" + sanitizeInput(strNumber) + "\">");
         } else {
             bodyHtml.append("<input type=\"text\" name=\"number\" size=\"9\" maxlength=\"9\">");
         }

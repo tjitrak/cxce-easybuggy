@@ -22,6 +22,7 @@ import org.apache.directory.shared.ldap.name.LdapDN;
 import org.t246osslab.easybuggy.core.dao.EmbeddedADS;
 import org.t246osslab.easybuggy.core.model.User;
 import org.t246osslab.easybuggy.core.utils.ApplicationUtils;
+import org.apache.commons.lang.StringEscapeUtils;
 
 @SuppressWarnings("serial")
 @WebServlet(urlPatterns = { "/login" })
@@ -83,8 +84,8 @@ public class DefaultLoginServlet extends AbstractServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException, ServletException {
         Locale locale = req.getLocale();
-        String userid = StringUtils.trim(req.getParameter("userid"));
-        String password = StringUtils.trim(req.getParameter("password"));
+        String userid = StringUtils.trim(StringEscapeUtils.escapeHtml(ApplicationUtils.sanitizeInput(req.getParameter("userid"))));
+        String password = StringUtils.trim(StringEscapeUtils.escapeHtml(ApplicationUtils.sanitizeInput(req.getParameter("password"))));
 
         HttpSession session = req.getSession(true);
         if (isAccountLocked(userid)) {

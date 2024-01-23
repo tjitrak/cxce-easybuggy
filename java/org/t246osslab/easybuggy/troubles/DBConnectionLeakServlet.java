@@ -65,7 +65,10 @@ public class DBConnectionLeakServlet extends AbstractServlet {
         try {
             conn = DBClient.getConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select id, name, phone, mail from users where ispublic = 'true'");
+            String query = "select id, name, phone, mail from users where ispublic = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, "true");
+            rs = pstmt.executeQuery();
             StringBuilder sb = new StringBuilder();
             while (rs.next()) {
                 sb.append("<tr><td>" + rs.getString("id") + "</td><td>" + rs.getString("name") + "</td><td>"

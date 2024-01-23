@@ -53,7 +53,8 @@ public class EndlessWaitingServlet extends AbstractServlet {
                     ProcessBuilder pb = new ProcessBuilder(batFile.getAbsolutePath());
                     Process process = pb.start();
                     process.waitFor();
-                    bodyHtml.append(getMsg("msg.executed.batch", locale) + batFile.getAbsolutePath());
+                    String sanitizedPath = sanitizeString(batFile.getAbsolutePath());
+                    bodyHtml.append(getMsg("msg.executed.batch", locale) + sanitizedPath);
                     bodyHtml.append("<br><br>");
                     bodyHtml.append(getMsg("label.execution.result", locale));
                     bodyHtml.append("<br><br>");
